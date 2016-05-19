@@ -20,6 +20,8 @@ typedef struct regDesc{
 
 void additem(Tdesc *, int);
 void imprimir(Tdesc *);
+
+int cardinalidade(Tdesc *);
 int pertinencia(Tdesc *, int);
 
 void uniao(Tdesc *,Tdesc *);
@@ -98,6 +100,9 @@ int main(){
     printf("A interseccao eh: ");
     interseccao(ConjuntoA, ConjuntoB);
     printf("\n\n");
+
+    printf("Cardinalidade do Conjunto A = %d\n", cardinalidade(ConjuntoA));
+    printf("Cardinalidade do Conjunto B = %d\n", cardinalidade(ConjuntoB));
     return 0;
 }
 
@@ -184,11 +189,23 @@ void interseccao(Tdesc *descA, Tdesc *descB){
   }
 }
 
+int cardinalidade(Tdesc *desc){
+  Tlista *aux;
+  int cont=0;
+  aux = desc->inicio;
+  while(aux!= NULL){
+    cont++;
+    aux=aux->prox;
+  }
+  //printf("Cardinalidade = %d\n", cont);
+  return cont;
+}
+
 void diferenca(Tdesc *descA,Tdesc *descB)
 {
   Tlista *aux, *aux2;
-  int cont;
   aux = descA->inicio;
+  int cont;
   while(1)
   { aux2 = descB->inicio;
     cont=0;
