@@ -21,16 +21,19 @@ typedef struct regDesc{
 void additem(Tdesc *, int);
 void imprimir(Tdesc *);
 int pertinencia(Tdesc *, int);
+
+void uniao(Tdesc *,Tdesc *);
+
+void interseccao(Tdesc *,Tdesc *,int);
+
+void diferenca12(Tdesc *,Tdesc *);
 /*
-void uniao(Tlista *inicio,Tlista *inicio2);
-void interseccao(Tlista *inicio,Tlista *inicio2,int qtd);
-void diferenca12(Tlista *inicio,Tlista *inicio2);
 void diferenca21(Tlista *inicio,Tlista *inicio2);
 
 */
 
 int main(){
-    int vValor, Num;
+    int vValor, Num, EscolheDif;
     int i, Atamanho, Btamanho, qtdmenor;
     char EscolheConj;
     Tdesc *ConjuntoA, *ConjuntoB;
@@ -82,11 +85,22 @@ int main(){
              printf("O numero %d pertence ao conjunto B\n", Num);
        else
           printf("Valor não pertinente aos conjuntos\n");
+
+        printf("Digite 1 - Diferenca de A menos B ou 2 - Diferenca de B menos A\n");
+        scanf("%d", &EscolheDif);
+        if(EscolheDif == 1)
+          diferenca12(ConjuntoA, ConjuntoB);
+        if(EscolheDif == 2)
+          diferenca12(ConjuntoA, ConjuntoB);
+
     }
+
+    uniao(ConjuntoA, ConjuntoB);
+
+    interseccao(ConjuntoA, ConjuntoB, qtdmenor);
+
+    diferenca12(ConjuntoA, ConjuntoB);
     /*
-    uniao(inicio, inicio2);
-    interseccao(inicio, inicio2, qtdmenor);
-    diferenca12(inicio, inicio2);
     diferenca21(inicio, inicio2);
     */
     return 0;
@@ -127,16 +141,16 @@ int pertinencia(Tdesc *desc, int valor){
   return 0;
 }
 
-/*
-void uniao(Tlista *inicio, Tlista *inicio2)
-{x
+
+void uniao(Tdesc *descA,Tdesc *descB)
+{
   Tlista *aux, *aux2;
   int cont;
   printf("A uniao eh: ");
-  imprimir(inicio);
-  aux2 = inicio2;
+  imprimir(descA);
+  aux2 = descB->inicio;
   while(1)
-  { aux = inicio;
+  { aux = descA->inicio;
     cont=0;
     while(aux != NULL)
     {
@@ -155,14 +169,15 @@ void uniao(Tlista *inicio, Tlista *inicio2)
   }
 }
 
-void interseccao(Tlista *inicio, Tlista *inicio2,int qtd)
+
+void interseccao(Tdesc *descA, Tdesc *descB,int qtd)
 {
   int cont=0, i;
   Tlista *aux, *aux2;
   int vetor[qtd];
 
-  aux = inicio;
-  aux2 = inicio2;
+  aux = descA->inicio;
+  aux2 = descB->inicio;
   i = 0;
   while(aux != NULL){
     while(aux2 != NULL){
@@ -173,13 +188,13 @@ void interseccao(Tlista *inicio, Tlista *inicio2,int qtd)
           if(aux->prox == NULL)
             break;
           aux=aux->prox;
-          aux2=inicio2;
+          aux2=descB->inicio;
         }
         else
           aux2=aux2->prox;
     }
     aux=aux->prox;
-    aux2=inicio2;
+    aux2=descB->inicio;
   }
   printf("A interseccao eh: ");
   for(i=0;i<cont;i++)
@@ -187,14 +202,14 @@ void interseccao(Tlista *inicio, Tlista *inicio2,int qtd)
   printf("\n\n");
 }
 
-void diferenca12(Tlista *inicio,Tlista *inicio2)
+void diferenca12(Tdesc *descA,Tdesc *descB)
 {
   Tlista *aux, *aux2;
   int cont;
   printf("A diferença 1-2 eh: ");
-  aux = inicio;
+  aux = descA->inicio;
   while(1)
-  { aux2 = inicio2;
+  { aux2 = descB->inicio;
     cont=0;
     while(aux2 != NULL)
     {
@@ -212,7 +227,7 @@ void diferenca12(Tlista *inicio,Tlista *inicio2)
     }
   }
 }
-
+/*
 void diferenca21(Tlista *inicio,Tlista *inicio2)
 {
   Tlista *aux, *aux2;
@@ -238,4 +253,5 @@ void diferenca21(Tlista *inicio,Tlista *inicio2)
     }
   }
 }
+
 */
