@@ -24,7 +24,7 @@ int pertinencia(Tdesc *, int);
 
 void uniao(Tdesc *,Tdesc *);
 
-void interseccao(Tdesc *,Tdesc *,int);
+void interseccao(Tdesc *,Tdesc *);
 
 void diferenca12(Tdesc *,Tdesc *);
 /*
@@ -34,7 +34,7 @@ void diferenca21(Tlista *inicio,Tlista *inicio2);
 
 int main(){
     int vValor, Num, EscolheDif;
-    int i, Atamanho, Btamanho, qtdmenor;
+    int i, Atamanho, Btamanho;
     char EscolheConj;
     Tdesc *ConjuntoA, *ConjuntoB;
 
@@ -63,11 +63,6 @@ int main(){
     imprimir(ConjuntoB);
     printf("\n\n");
 
-    if(Atamanho > Btamanho)
-       qtdmenor = Atamanho;
-    else
-     qtdmenor = Btamanho;
-
     while(1){
        printf("Digite um numero para verificar sua pertinencia ou -999 para sair\n");
        scanf("%d", &Num);
@@ -85,19 +80,11 @@ int main(){
              printf("O numero %d pertence ao conjunto B\n", Num);
        else
           printf("Valor não pertinente aos conjuntos\n");
-
-        printf("Digite 1 - Diferenca de A menos B ou 2 - Diferenca de B menos A\n");
-        scanf("%d", &EscolheDif);
-        if(EscolheDif == 1)
-          diferenca12(ConjuntoA, ConjuntoB);
-        if(EscolheDif == 2)
-          diferenca12(ConjuntoA, ConjuntoB);
-
     }
 
     uniao(ConjuntoA, ConjuntoB);
 
-    interseccao(ConjuntoA, ConjuntoB, qtdmenor);
+    interseccao(ConjuntoA, ConjuntoB);
 
     diferenca12(ConjuntoA, ConjuntoB);
     /*
@@ -169,22 +156,15 @@ void uniao(Tdesc *descA,Tdesc *descB)
   }
 }
 
-
-void interseccao(Tdesc *descA, Tdesc *descB,int qtd)
-{
-  int cont=0, i;
+void interseccao(Tdesc *descA, Tdesc *descB){
   Tlista *aux, *aux2;
-  int vetor[qtd];
-
   aux = descA->inicio;
   aux2 = descB->inicio;
-  i = 0;
+  printf("A interseccao eh: ");
   while(aux != NULL){
     while(aux2 != NULL){
-        if(aux->valor == aux2->valor)
-        {
-          vetor[cont] = aux->valor;
-          cont++;
+        if(aux->valor == aux2->valor){
+          printf("%d ", aux->valor);
           if(aux->prox == NULL)
             break;
           aux=aux->prox;
@@ -196,10 +176,6 @@ void interseccao(Tdesc *descA, Tdesc *descB,int qtd)
     aux=aux->prox;
     aux2=descB->inicio;
   }
-  printf("A interseccao eh: ");
-  for(i=0;i<cont;i++)
-    printf("%d ", vetor[i]);
-  printf("\n\n");
 }
 
 void diferenca12(Tdesc *descA,Tdesc *descB)
