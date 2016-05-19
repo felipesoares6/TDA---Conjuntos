@@ -23,14 +23,14 @@ void imprimir(Tdesc *);
 
 int cardinalidade(Tdesc *);
 int pertinencia(Tdesc *, int);
-
 void uniao(Tdesc *,Tdesc *);
 void interseccao(Tdesc *,Tdesc *);
 void diferenca(Tdesc *,Tdesc *);
+void produto(Tdesc *,Tdesc *);
 
 
 int main(){
-    int vValor, Num, EscolheDif;
+    int vValor, Num, Escolhe;
     int i, Atamanho, Btamanho;
     char EscolheConj;
     Tdesc *ConjuntoA, *ConjuntoB;
@@ -81,16 +81,31 @@ int main(){
     printf("Digite 1 - Diferenca de A menos B ou Digite 2 - Diferenca de B menos A -"
                                                       "Digite -999 para sair\n\n");
     while(1){
-        scanf("%d", &EscolheDif);
-        if(EscolheDif == -999)
+        scanf("%d", &Escolhe);
+        if(Escolhe == -999)
           break;
-        if(EscolheDif == 1)
-        {  printf("--->A diferença 1-2 eh: ");
+        if(Escolhe == 1)
+        {  printf("--->A diferença A-B eh: ");
           diferenca(ConjuntoA, ConjuntoB);
         }
-        if(EscolheDif == 2)
-        { printf("--->A diferença 2-1 eh: ");
+        if(Escolhe == 2)
+        { printf("--->A diferença B-A eh: ");
           diferenca(ConjuntoB, ConjuntoA);
+        }
+    }
+    printf("\n\nDigite 1 - Produto de A menos B ou Digite 2 - Produto de B menos A -"
+                                                      "Digite -999 para sair\n\n");
+    while(1){
+        scanf("%d", &Escolhe);
+        if(Escolhe == -999)
+          break;
+        if(Escolhe == 1)
+        {  printf("--->O produto A-B eh: ");
+          produto(ConjuntoA, ConjuntoB);
+        }
+        if(Escolhe == 2)
+        { printf("--->O produto B-A eh: ");
+          produto(ConjuntoB, ConjuntoA);
         }
     }
     printf("\n\n");
@@ -102,7 +117,7 @@ int main(){
     printf("\n\n");
 
     printf("Cardinalidade do Conjunto A = %d\n", cardinalidade(ConjuntoA));
-    printf("Cardinalidade do Conjunto B = %d\n", cardinalidade(ConjuntoB));
+    printf("Cardinalidade do Conjunto B = %d\n\n", cardinalidade(ConjuntoB));
     return 0;
 }
 
@@ -197,7 +212,6 @@ int cardinalidade(Tdesc *desc){
     cont++;
     aux=aux->prox;
   }
-  //printf("Cardinalidade = %d\n", cont);
   return cont;
 }
 
@@ -223,5 +237,21 @@ void diferenca(Tdesc *descA,Tdesc *descB)
     {
       break;
     }
+  }
+}
+void produto(Tdesc *descA,Tdesc *descB)
+{
+  Tlista *aux, *aux2;
+  aux = descA->inicio;
+
+  int i,j;
+  while(aux!=NULL)
+  { aux2 = descB->inicio;
+    while(aux2 != NULL)
+    {
+      printf("(%d,%d)",aux->valor,aux2->valor );
+      aux2 = aux2->prox;
+    }
+    aux = aux->prox;
   }
 }
