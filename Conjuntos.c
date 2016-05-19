@@ -57,39 +57,37 @@ int main(){
     printf("\nLista 2: ");
     imprimir(ConjuntoB);
     printf("\n\n");
+    printf("Digite um numero para verificar sua pertinencia ou -999 para sair");
+    while(1){
+       scanf("%d", &Num);
+       if(Num == -999)
+          break;
+       printf("Digite o conjunto A ou B");
+       scanf(" %c", &EscolheConj);
+       if(EscolheConj == 'A')
+         if(pertinencia(ConjuntoA, Num))
+           printf("\n\n--->O numero %d pertence ao conjunto A\n\n", Num);
+        else
+          printf("\n\n--->Valor não pertinente aos conjuntos\n\n");
+       if(EscolheConj == 'B')
+         if(pertinencia(ConjuntoB, Num))
+             printf("\n\n--->O numero %d pertence ao conjunto B\n\n", Num);
+       else
+          printf("\n\n--->Valor não pertinente aos conjuntos\n\n");
+    }
 
-    // while(1){
-    //    printf("Digite um numero para verificar sua pertinencia ou -999 para sair\n");
-    //    scanf("%d", &Num);
-    //    if(Num == -999)
-    //       break;
-    //    printf("Digite o conjunto A ou B\n");
-    //    scanf(" %c", &EscolheConj);
-    //    if(EscolheConj == 'A')
-    //      if(pertinencia(ConjuntoA, Num))
-    //        printf("O numero %d pertence ao conjunto A\n", Num);
-    //     else
-    //       printf("Valor não pertinente aos conjuntos\n");
-    //    if(EscolheConj == 'B')
-    //      if(pertinencia(ConjuntoB, Num))
-    //          printf("O numero %d pertence ao conjunto B\n", Num);
-    //    else
-    //       printf("Valor não pertinente aos conjuntos\n");
-    //
-    //
-    // }
-
-    printf("Digite 1 - Diferenca de A menos B ou Digite 2 - Diferenca de B menos A\n\n");
+    printf("Digite 1 - Diferenca de A menos B ou Digite 2 - Diferenca de B menos A -"
+                                                      "Digite -999 para sair\n\n");
     while(1){
         scanf("%d", &EscolheDif);
         if(EscolheDif == -999)
           break;
         if(EscolheDif == 1)
-        {  printf("\nA diferença 1-2 eh: ");
+        {  printf("--->A diferença 1-2 eh: ");
           diferenca(ConjuntoA, ConjuntoB);
         }
         if(EscolheDif == 2)
-        { printf("A diferença 2-1 eh: ");
+        { printf("--->A diferença 2-1 eh: ");
           diferenca(ConjuntoB, ConjuntoA);
         }
     }
@@ -99,7 +97,7 @@ int main(){
     printf("\n");
     printf("A interseccao eh: ");
     interseccao(ConjuntoA, ConjuntoB);
-    printf("\n");
+    printf("\n\n");
     return 0;
 }
 
