@@ -14,8 +14,9 @@ typedef struct regDesc{
   int qtd;
 }Tdesc;
 
+
 //void criacao( Tdesc *,int);
-//void destruicao
+void destroi(Tdesc *);
 void additem(Tdesc *, int);
 int excluir(Tdesc *, char);
 void imprimir(Tdesc *);
@@ -143,6 +144,26 @@ int main(){
           imprimir(ConjuntoB);
       printf("\n");
     }
+
+    while(1){
+      printf("Digite o conjunto a ser destruido(1- Conjunto A; 2- Conjunto B ou -999 Para Nenhum)\n");
+      scanf("%d",&Escolhe);
+      if(Escolhe == -999)
+        break;
+      else if(Escolhe == 1){
+        destroi(ConjuntoA);
+        printf("Conjunto A destruido com sucesso!\n");
+      }else{
+        destroi(ConjuntoB);
+        printf("Conjunto B destruido com sucesso!\n");
+      }
+
+    }
+    imprimir(ConjuntoA);
+    printf("\n");
+    imprimir(ConjuntoB);
+    printf("\n");
+    
     return 0;
 }
 
@@ -351,5 +372,16 @@ void produto(Tdesc *descA,Tdesc *descB)
       aux2 = aux2->prox;
     }
     aux = aux->prox;
+  }
+}
+
+void destroi(Tdesc *desc){
+  if(desc != NULL){
+    Tlista *aux;
+    while(desc->inicio != NULL){
+        aux = desc->inicio;
+        desc->inicio = desc->inicio->prox;
+        free(aux);
+    }
   }
 }
