@@ -1,7 +1,5 @@
 /*
-	Autores:    Felipe Luiz Soares 0030481511012
-		    Jean Vitor         0030481511019
-	Exercício 4 da lista 1.
+
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +8,7 @@
 typedef struct reglista{
   int valor;
   struct reglista *prox;
+  struct reglista *ant;
 }Tlista;
 
 typedef struct regDesc{
@@ -18,16 +17,18 @@ typedef struct regDesc{
   int qtd;
 }Tdesc;
 
+//void criacao( Tdesc *,int);
+//void destruicao
 void additem(Tdesc *, int);
+int excluir(Tdesc *, char);
 void imprimir(Tdesc *);
-
-int cardinalidade(Tdesc *);
-int pertinencia(Tdesc *, int);
 void uniao(Tdesc *,Tdesc *);
 void interseccao(Tdesc *,Tdesc *);
 void diferenca(Tdesc *,Tdesc *);
 void produto(Tdesc *,Tdesc *);
-
+int pertinencia(Tdesc *, int);
+//
+int cardinalidade(Tdesc *);
 
 int main(){
     int vValor, Num, Escolhe;
@@ -44,6 +45,7 @@ int main(){
     ConjuntoB->fim = NULL;
 
     scanf("%d", &Atamanho);
+    //criacao(ConjuntoA,Atamanho);
     for (i = 0; i < Atamanho; i++) {
       scanf("%d", &Num);
       additem(ConjuntoA, Num);
@@ -60,7 +62,8 @@ int main(){
     imprimir(ConjuntoB);
     printf("\n\n");
     printf("Digite um numero para verificar sua pertinencia ou -999 para sair");
-    while(1){
+    while(1)
+    { scanf("%c", &EscolheConj);
        scanf("%d", &Num);
        if(Num == -999)
           break;
@@ -118,21 +121,80 @@ int main(){
 
     printf("Cardinalidade do Conjunto A = %d\n", cardinalidade(ConjuntoA));
     printf("Cardinalidade do Conjunto B = %d\n\n", cardinalidade(ConjuntoB));
+
+    while(1)
+    { printf("De qual Conjunto deseja excluir ?\n");
+      printf("Digite o valor que deseja excluir do conjunto\n");
+      scanf("%d",&Escolhe);
+      scanf("%d",&Num);
+      if(Num == -999)
+          break;
+      if(Escolhe == 1)
+        if(excluir(ConjuntoA,Num)== 0)
+          imprimir(ConjuntoA);
+      if(Escolhe == 2)
+        if(excluir(ConjuntoB,Num)== 0)
+          imprimir(ConjuntoB);
+      printf("\n");
+    }
     return 0;
 }
 
-void additem(Tdesc *desc, int valor){
-  Tlista *aux;
-  aux = (Tlista *)malloc(sizeof(Tlista));
-  aux->valor = valor;
-  aux->prox = NULL;
-  if(desc->inicio == NULL)
-    desc->inicio = aux;
-  else
-    desc->fim->prox = aux;
+void additem(Tdesc *desc,int valor){
+	Tlista *aux;
+	aux = (Tlista *) malloc(sizeof(Tlista));
+	aux->valor = valor;
+	aux->prox = NULL;
 
-  desc->fim = aux;
+	if (desc->inicio == NULL)
+	{
+		desc->inicio = aux;
+		aux->ant  = NULL;
+	}
+	else
+	{
+		desc->fim->prox = aux;
+		aux->ant = desc->fim;
+	}
+	desc->fim = aux;
   desc->qtd++;
+}
+
+int excluir(Tdesc *desc, char valor){
+	//excluir
+  printf("%d\n",valor );
+	Tlista *aux=desc->inicio;
+	int flag=0;
+	while (aux != NULL)
+	{
+		if(valor == aux->valor)
+		{		if(aux->ant == NULL && aux->prox == NULL)
+				{		desc->inicio = NULL;
+						desc->fim = NULL;
+				}
+				else if (aux->ant == NULL)
+				{	desc->inicio = aux->prox;
+					aux->prox->ant = NULL;
+				}
+				else if(aux->prox == NULL)
+				{
+					desc->fim = aux->ant;
+					aux->ant->prox = NULL;
+				}
+				else
+				{
+					aux->ant->prox = aux->prox;
+					aux->prox->ant = aux->ant;
+				}
+				free(aux);
+				flag++;
+		}
+		aux = aux->prox;
+	}
+	if(flag == 0)
+		return 1;
+	else
+	   return 0;
 }
 
 void imprimir(Tdesc *desc){
