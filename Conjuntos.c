@@ -1,6 +1,3 @@
-/*
-
-*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,7 +24,7 @@ void interseccao(Tdesc *,Tdesc *);
 void diferenca(Tdesc *,Tdesc *);
 void produto(Tdesc *,Tdesc *);
 int pertinencia(Tdesc *, int);
-//
+void equivalencia(Tdesc *, Tdesc *);
 int cardinalidade(Tdesc *);
 
 int main(){
@@ -44,30 +41,33 @@ int main(){
     ConjuntoA->fim = NULL;
     ConjuntoB->fim = NULL;
 
+	printf("Digite o tamanho do Conjunto A: ");
     scanf("%d", &Atamanho);
-    //criacao(ConjuntoA,Atamanho);
+	printf("\nDigite os valores do Conjunto A:\n");
     for (i = 0; i < Atamanho; i++) {
       scanf("%d", &Num);
       additem(ConjuntoA, Num);
     }
+	printf("\nDigite o tamanho do Conjunto B: ");
     scanf("%d", &Btamanho);
+	printf("\nDigite os valores do Conjunto B:\n");
     for (i = 0; i < Btamanho; i++) {
       scanf("%d", &Num);
       additem(ConjuntoB, Num);
     }
 
-  	printf("\nLista 1: ");
+  	printf("\nConjunto A: ");
   	imprimir(ConjuntoA);
-    printf("\nLista 2: ");
+    printf("\nConjunto B: ");
     imprimir(ConjuntoB);
     printf("\n\n");
-    printf("Digite um numero para verificar sua pertinencia ou -999 para sair");
+    printf("Digite um numero para verificar sua pertinencia ou -999 para sair\n");
     while(1)
-    { scanf("%c", &EscolheConj);
+    {  //scanf("%c", &EscolheConj);
        scanf("%d", &Num);
        if(Num == -999)
           break;
-       printf("Digite o conjunto A ou B");
+       printf("Digite o conjunto A ou B\n");
        scanf(" %c", &EscolheConj);
        if(EscolheConj == 'A')
          if(pertinencia(ConjuntoA, Num))
@@ -90,10 +90,12 @@ int main(){
         if(Escolhe == 1)
         {  printf("--->A diferença A-B eh: ");
           diferenca(ConjuntoA, ConjuntoB);
+		  printf("\n");
         }
         if(Escolhe == 2)
         { printf("--->A diferença B-A eh: ");
           diferenca(ConjuntoB, ConjuntoA);
+		  printf("\n");
         }
     }
     printf("\n\nDigite 1 - Produto de A menos B ou Digite 2 - Produto de B menos A -"
@@ -103,12 +105,14 @@ int main(){
         if(Escolhe == -999)
           break;
         if(Escolhe == 1)
-        {  printf("--->O produto A-B eh: ");
+        { printf("--->O produto A-B eh: ");
           produto(ConjuntoA, ConjuntoB);
+		      printf("\n");
         }
         if(Escolhe == 2)
         { printf("--->O produto B-A eh: ");
           produto(ConjuntoB, ConjuntoA);
+		      printf("\n");
         }
     }
     printf("\n\n");
@@ -117,15 +121,17 @@ int main(){
     printf("\n");
     printf("A interseccao eh: ");
     interseccao(ConjuntoA, ConjuntoB);
+	  printf("\n");
+	  equivalencia(ConjuntoA, ConjuntoB);
     printf("\n\n");
 
     printf("Cardinalidade do Conjunto A = %d\n", cardinalidade(ConjuntoA));
     printf("Cardinalidade do Conjunto B = %d\n\n", cardinalidade(ConjuntoB));
 
     while(1)
-    { printf("De qual Conjunto deseja excluir ?\n");
+    { printf("De qual Conjunto deseja excluir (1-Conjunto A ou 2-Conjunto B) ?\n");
+	  scanf("%d",&Escolhe);
       printf("Digite o valor que deseja excluir do conjunto\n");
-      scanf("%d",&Escolhe);
       scanf("%d",&Num);
       if(Num == -999)
           break;
@@ -276,6 +282,36 @@ int cardinalidade(Tdesc *desc){
   }
   return cont;
 }
+
+void equivalencia(Tdesc *descA, Tdesc *descB)
+{
+	Tlista *aux, *aux2;
+	int cont;
+	aux = descA->inicio;
+	aux2 = descB->inicio;
+	cont = descA->qtd;
+	int qtde = 0;
+	while(aux != NULL){
+		while(aux2 != NULL){
+			if(aux->valor == aux2->valor){
+				qtde++;
+			if(aux->prox == NULL)
+				break;
+			aux = aux->prox;
+			aux2 = descB->inicio;
+			}
+			else
+				aux2 = aux2->prox;
+		}
+		aux = aux->prox;
+		aux2 = descB->inicio;
+	}
+	if(qtde == cont)
+		printf("Os conjuntos são equivalentes.");
+	else
+		printf("Os conjuntos não são equivalentes.");
+}
+
 
 void diferenca(Tdesc *descA,Tdesc *descB)
 {
