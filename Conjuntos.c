@@ -15,7 +15,7 @@ typedef struct regDesc{
 }Tdesc;
 
 
-//void criacao( Tdesc *,int);
+void criacao( Tdesc *,Tdesc *);
 void destroi(Tdesc *);
 void additem(Tdesc *, int);
 int excluir(Tdesc *, char);
@@ -29,30 +29,26 @@ void equivalencia(Tdesc *, Tdesc *);
 int cardinalidade(Tdesc *);
 
 int main(){
-    int vValor, Num, Escolhe;
-    int i, Atamanho, Btamanho;
-    char EscolheConj;
-    Tdesc *ConjuntoA, *ConjuntoB;
+   int vValor, Num, Escolhe;
+   int i, Atamanho, Btamanho;
+   char EscolheConj;
+   Tdesc *ConjuntoA, *ConjuntoB;
+   ConjuntoA = (Tdesc *) malloc(sizeof(Tdesc));
+   ConjuntoB = (Tdesc *) malloc(sizeof(Tdesc));
 
-    ConjuntoA = (Tdesc *) malloc(sizeof(Tdesc));
-    ConjuntoB = (Tdesc *) malloc(sizeof(Tdesc));
+   criacao(ConjuntoA,ConjuntoB);
 
-    ConjuntoA->inicio = NULL;
-    ConjuntoB->inicio = NULL;
-    ConjuntoA->fim = NULL;
-    ConjuntoB->fim = NULL;
-
-	printf("Digite o tamanho do Conjunto A: ");
-    scanf("%d", &Atamanho);
-	printf("\nDigite os valores do Conjunto A:\n");
-    for (i = 0; i < Atamanho; i++) {
+	 printf("Digite o tamanho do Conjunto A: ");
+     scanf("%d", &Atamanho);
+	 printf("\nDigite os valores do Conjunto A:\n");
+   for (i = 0; i < Atamanho; i++) {
       scanf("%d", &Num);
       additem(ConjuntoA, Num);
     }
-	printf("\nDigite o tamanho do Conjunto B: ");
+	 printf("\nDigite o tamanho do Conjunto B: ");
     scanf("%d", &Btamanho);
-	printf("\nDigite os valores do Conjunto B:\n");
-    for (i = 0; i < Btamanho; i++) {
+	 printf("\nDigite os valores do Conjunto B:\n");
+   for (i = 0; i < Btamanho; i++) {
       scanf("%d", &Num);
       additem(ConjuntoB, Num);
     }
@@ -64,8 +60,7 @@ int main(){
     printf("\n\n");
     printf("Digite um numero para verificar sua pertinencia ou -999 para sair\n");
     while(1)
-    {  //scanf("%c", &EscolheConj);
-       scanf("%d", &Num);
+    {  scanf("%d", &Num);
        if(Num == -999)
           break;
        printf("Digite o conjunto A ou B\n");
@@ -163,8 +158,30 @@ int main(){
     printf("\n");
     imprimir(ConjuntoB);
     printf("\n");
-    
+
     return 0;
+}
+
+void criacao( Tdesc *ConjuntoA,Tdesc *ConjuntoB)
+{
+  ConjuntoA->inicio = NULL;
+  ConjuntoB->inicio = NULL;
+  ConjuntoA->fim = NULL;
+  ConjuntoB->fim = NULL;
+  ConjuntoA->qtd = 0;
+  ConjuntoB->qtd = 0;
+}
+
+
+void destroi(Tdesc *desc){
+  if(desc != NULL){
+    Tlista *aux;
+    while(desc->inicio != NULL){
+        aux = desc->inicio;
+        desc->inicio = desc->inicio->prox;
+        free(aux);
+    }
+  }
 }
 
 void additem(Tdesc *desc,int valor){
@@ -372,16 +389,5 @@ void produto(Tdesc *descA,Tdesc *descB)
       aux2 = aux2->prox;
     }
     aux = aux->prox;
-  }
-}
-
-void destroi(Tdesc *desc){
-  if(desc != NULL){
-    Tlista *aux;
-    while(desc->inicio != NULL){
-        aux = desc->inicio;
-        desc->inicio = desc->inicio->prox;
-        free(aux);
-    }
   }
 }
