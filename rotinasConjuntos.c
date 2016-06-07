@@ -2,15 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-void criacao( Tdesc *ConjuntoA,Tdesc *ConjuntoB)
+int flag=0;
+void criacao( Tdesc *Conjunto)
 {
-  ConjuntoA->inicio = NULL;
-  ConjuntoB->inicio = NULL;
-  ConjuntoA->fim = NULL;
-  ConjuntoB->fim = NULL;
-  ConjuntoA->qtd = 0;
-  ConjuntoB->qtd = 0;
+  Conjunto->inicio = NULL;
+  Conjunto->fim = NULL;
+  Conjunto->qtd = 0;
 }
 
 
@@ -45,11 +42,11 @@ void additem(Tdesc *desc,int valor){
   desc->qtd++;
 }
 
-int excluir(Tdesc *desc, char valor){
+int excluir(Tdesc *desc, int valor){
 	//excluir
-  printf("%d\n",valor );
+  //printf("%d\n",valor );
 	Tlista *aux=desc->inicio;
-	int flag=0;
+	int flag2=0;
 	while (aux != NULL)
 	{
 		if(valor == aux->valor)
@@ -76,7 +73,7 @@ int excluir(Tdesc *desc, char valor){
 		}
 		aux = aux->prox;
 	}
-	if(flag == 0)
+	if(flag2 == 0)
 		return 1;
 	else
 	   return 0;
@@ -85,10 +82,20 @@ int excluir(Tdesc *desc, char valor){
 void imprimir(Tdesc *desc){
   Tlista *aux;
   aux = desc->inicio;
-	while(aux != NULL){
-    printf("%d ", aux->valor);
-		aux = aux->prox;
+	while(aux != NULL)
+  {
+    if(flag==0){
+      printf("%d ", aux->valor);
+    }
+    else
+    { printf("(%d, ", aux->valor);
+      aux = aux->prox;
+      printf("%d)",aux->valor );
+      aux = aux->ant->prox;
+    }
+    aux = aux->prox;
 	}
+  flag=0;
 }
 
 int pertinencia(Tdesc *desc, int valor){
@@ -103,12 +110,10 @@ int pertinencia(Tdesc *desc, int valor){
   return 0;
 }
 
-
 void uniao(Tdesc *descA,Tdesc *descB)
 {
   Tlista *aux, *aux2;
   int cont;
-  imprimir(descA);
   aux2 = descB->inicio;
   while(1)
   { aux = descA->inicio;
@@ -120,7 +125,7 @@ void uniao(Tdesc *descA,Tdesc *descB)
       aux = aux->prox;
     }
     if(cont == 0)
-      printf("%d ",aux2->valor );
+      additem(descA,aux2->valor);
     if(aux2->prox != NULL)
       aux2 = aux2->prox;
     else
@@ -130,14 +135,14 @@ void uniao(Tdesc *descA,Tdesc *descB)
   }
 }
 
-void interseccao(Tdesc *descA, Tdesc *descB){
+void interseccao(Tdesc *descA, Tdesc *descB,Tdesc *descC){
   Tlista *aux, *aux2;
   aux = descA->inicio;
   aux2 = descB->inicio;
   while(aux != NULL){
     while(aux2 != NULL){
         if(aux->valor == aux2->valor){
-          printf("%d ", aux->valor);
+          additem(descC,aux->valor);
           if(aux->prox == NULL)
             break;
           aux=aux->prox;
@@ -186,13 +191,13 @@ void equivalencia(Tdesc *descA, Tdesc *descB)
 		aux2 = descB->inicio;
 	}
 	if(qtde == cont)
-		printf("Os conjuntos são equivalentes.");
+		printf("Os conjuntos são equivalentes.");//////////////////////////////////
 	else
-		printf("Os conjuntos não são equivalentes.");
+		printf("Os conjuntos não são equivalentes.");/////////////////////////////////
 }
 
 
-void diferenca(Tdesc *descA,Tdesc *descB)
+void diferenca(Tdesc *descA,Tdesc *descB,Tdesc *descC)
 {
   Tlista *aux, *aux2;
   aux = descA->inicio;
@@ -207,7 +212,7 @@ void diferenca(Tdesc *descA,Tdesc *descB)
       aux2 = aux2->prox;
     }
     if(cont == 0)
-      printf("%d ",aux->valor);
+      additem(descC,aux->valor);
     if(aux->prox != NULL)
       aux = aux->prox;
     else
@@ -216,19 +221,23 @@ void diferenca(Tdesc *descA,Tdesc *descB)
     }
   }
 }
-void produto(Tdesc *descA,Tdesc *descB)
+void produto(Tdesc *descA,Tdesc *descB,Tdesc *descC)
 {
   Tlista *aux, *aux2;
   aux = descA->inicio;
-
+  char valor[7];
   int i,j;
   while(aux!=NULL)
   { aux2 = descB->inicio;
     while(aux2 != NULL)
     {
-      printf("(%d,%d)",aux->valor,aux2->valor );
+      additem(descC,aux->valor);
+      additem(descC,aux2->valor);
+      flag=1;
       aux2 = aux2->prox;
     }
     aux = aux->prox;
   }
+  imprimir(descC);
+  destroi(descC);
 }

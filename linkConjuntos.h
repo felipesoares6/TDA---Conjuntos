@@ -10,26 +10,15 @@ typedef struct regDesc{
   int qtd;
 }Tdesc;
 
-void criacao( Tdesc *,Tdesc *);
-
+void criacao( Tdesc *);
 void destroi(Tdesc *);
-
 void additem(Tdesc *, int);
-
-int excluir(Tdesc *, char);
-
+int excluir(Tdesc *, int);
 void imprimir(Tdesc *);
-
 void uniao(Tdesc *,Tdesc *);
-
-void interseccao(Tdesc *,Tdesc *);
-
-void diferenca(Tdesc *,Tdesc *);
-
-void produto(Tdesc *,Tdesc *);
-
+void interseccao(Tdesc *,Tdesc *,Tdesc *);
+void diferenca(Tdesc *,Tdesc *,Tdesc *);
+void produto(Tdesc *,Tdesc *,Tdesc *);
 int pertinencia(Tdesc *, int);
-
 void equivalencia(Tdesc *, Tdesc *);
-
 int cardinalidade(Tdesc *);
