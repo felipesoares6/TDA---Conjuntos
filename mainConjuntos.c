@@ -1,3 +1,9 @@
+/*  TDA - Conjuntos
+        Felipe Luiz Soares 0030481511012
+        Debora Hirai 0030481511010
+        Jean Vitor 003048151019
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -160,9 +166,6 @@ int main(){
   	printf("13 - Sair\n");
 		scanf("%d", &opcao);
 	}
-
-
-
     return 0;
 
 }

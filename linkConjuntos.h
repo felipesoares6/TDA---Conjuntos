@@ -1,3 +1,9 @@
+/*  TDA - Conjuntos
+        Felipe Luiz Soares 0030481511012
+        Debora Hirai 0030481511010
+        Jean Vitor 003048151019
+*/
+
 typedef struct reglista{
   int valor;
   struct reglista *prox;

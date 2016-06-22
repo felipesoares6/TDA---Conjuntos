@@ -1,8 +1,16 @@
+/*  TDA - Conjuntos
+        Felipe Luiz Soares 0030481511012
+        Debora Hirai 0030481511010
+        Jean Vitor 003048151019
+*/
+
 #include "linkConjuntos.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 int flag=0;
+
 void criacao( Tdesc *Conjunto)
 {
   Conjunto->inicio = NULL;
@@ -191,9 +199,9 @@ void equivalencia(Tdesc *descA, Tdesc *descB)
 		aux2 = descB->inicio;
 	}
 	if(qtde == cont)
-		printf("Os conjuntos são equivalentes.");//////////////////////////////////
+		printf("Os conjuntos são equivalentes.");
 	else
-		printf("Os conjuntos não são equivalentes.");/////////////////////////////////
+		printf("Os conjuntos não são equivalentes.");
 }
 
 
